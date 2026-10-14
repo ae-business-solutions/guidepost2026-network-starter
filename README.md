@@ -14,11 +14,11 @@ Step 6, a source of truth that drives config, is in the four `guidepost2026-netw
 
 ## Before you use AI on network data
 
-1. Use your company's approved AI tool, on a plan that doesn't train on your data.
-2. Scrub secrets first: `python scrub.py <file or folder>`.
-3. Work on copies: exported configs and labs, not live devices.
-4. Ask for self-contained output: one HTML file with no external scripts or network calls.
-5. Read what it writes, run it yourself, and keep it in git.
+1. Use your company's approved AI tool, on a plan that doesn't train on your data
+2. Scrub secrets first: `python scrub.py <file or folder>` (or build your own)
+3. Work on copies: exported configs and labs, not live devices
+4. Ask for self-contained output: one HTML file with no external scripts or network calls
+5. Read what it writes, run it yourself, and keep it in git
 
 ## Set up
 
