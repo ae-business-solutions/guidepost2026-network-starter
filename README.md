@@ -1,4 +1,4 @@
-# guidepost2026-network-starter
+# Guidepost 2026 - Network Automation in the AI Era
 
 Five low-risk ways to start automating your network with AI, from the talk "Network Automation in the AI Era". Steps 1–4 never write to a device. Step 5 is the first that does.
 
