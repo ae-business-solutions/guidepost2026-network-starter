@@ -1,0 +1,41 @@
+# Step 3: back up every device in inventory.yml and commit the changes.
+# Needs a self-hosted runner that can reach your devices' management addresses.
+# Secrets: NET_USERNAME / NET_PASSWORD for a read-only account.
+name: collect
+
+on:
+  workflow_dispatch:
+  # Uncomment once a self-hosted runner labeled "netops" is online:
+  # schedule:
+  #   - cron: "17 5 * * *"   # nightly, 05:17 UTC
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: [self-hosted, netops]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Collect configs (read-only)
+        env:
+          NET_USERNAME: ${{ secrets.NET_USERNAME }}
+          NET_PASSWORD: ${{ secrets.NET_PASSWORD }}
+        run: python collect.py
+
+      - name: Commit what changed
+        if: always()
+        run: |
+          git config user.name "config-collector"
+          git config user.email "config-collector@users.noreply.github.com"
+          git add configs
+          if git diff --cached --quiet; then echo "no config changes"; exit 0; fi
+          git commit -m "Config collection $(date -u +%F)"
+          git push

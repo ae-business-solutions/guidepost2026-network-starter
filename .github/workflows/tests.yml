@@ -1,0 +1,33 @@
+# Step 4: run the network unit tests against configs/ and post failures to Teams.
+# Offline: no device access, so it runs on GitHub-hosted runners.
+# Secret (optional): TEAMS_WEBHOOK_URL from a Teams Workflows webhook.
+name: network-tests
+
+on:
+  push:
+    paths: ["configs/**", "tests/**"]
+  workflow_run:
+    workflows: [collect]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pytest
+
+      - name: Network unit tests
+        run: pytest tests -q --junitxml=results.xml
+
+      - name: Post failures to Teams
+        if: failure() && env.TEAMS_WEBHOOK_URL != ''
+        run: python notify_teams.py results.xml

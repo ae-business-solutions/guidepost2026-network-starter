@@ -1,0 +1,21 @@
+# What collect.py backs up. platform = a Netmiko device_type, or paloalto_panos.
+# These two are the switches in lab/ (deploy it first: see the README).
+devices:
+  - name: sw1
+    host: 172.20.20.11
+    platform: arista_eos
+    site: lab
+  - name: sw2
+    host: 172.20.20.12
+    platform: arista_eos
+    site: lab
+
+  # Examples for your own network:
+  # - name: hq-core1
+  #   host: 10.10.0.11
+  #   platform: cisco_ios
+  #   site: hq
+  # - name: hq-fw01
+  #   host: 10.10.0.5
+  #   platform: paloalto_panos
+  #   site: hq

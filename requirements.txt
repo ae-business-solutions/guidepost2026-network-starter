@@ -1,0 +1,4 @@
+netmiko>=4.4
+requests>=2.31
+pyyaml>=6
+pytest>=8
